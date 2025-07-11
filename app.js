@@ -31,6 +31,11 @@ app.get("/",(req,res)=>{
     res.send("Working On The Root!");
 })
 
+app.get("/semester/:id", (req,res) => {
+  const semId = req.params.id;
+  res.render("semester.ejs", {semId});
+});
+
 app.listen(8080,()=>{
     console.log("listening on the port 8080");
 });
