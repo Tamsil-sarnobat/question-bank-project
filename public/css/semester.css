@@ -1,0 +1,33 @@
+main {
+    background-color: #F6FFFE;
+}
+
+.subject {
+     background-color: #f2f2f2;
+     padding: 20px 15px;
+     border-radius: 35px;
+     height: 7rem;
+     width: 15rem;
+     margin: 0 auto;
+     box-shadow: 3px 5px 7px rgba(0, 0, 0, 0.15);
+     transition: transform 0.2s;
+}
+
+.subject:hover {
+    transform: translateY(-5px);
+    box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.subject-title {
+    color: #213555;
+}
+
+.sem-title {
+   color: #213555;
+}
+
+.q-link {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
