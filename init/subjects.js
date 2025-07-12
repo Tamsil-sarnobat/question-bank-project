@@ -58,27 +58,27 @@ const subjects = [
 
  { 
   name: "Subject 1", 
-  semester: 1 
+  semester: 3
  },
 
  { 
   name: "Subject 2", 
-  semester: 1 
+  semester: 3 
  },
 
  { 
   name: "Subject 3", 
-  semester: 1 
+  semester: 3 
  },
 
  { 
   name: "Subject 4", 
-  semester: 1 
+  semester: 3 
  },
 
  { 
   name: "Subject 5", 
-  semester: 1 
+  semester: 3
  },
 
  //sem4

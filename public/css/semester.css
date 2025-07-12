@@ -31,3 +31,23 @@ main {
     color: black;
     font-weight: 500;
 }
+
+.q-link:hover {
+    text-decoration: underline;
+}
+
+.full-width-wrapper {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.nav-link {
+     text-decoration: none !important; 
+    color: darkslategrey !important; 
+}
+
+.nav-link:hover {
+    text-decoration: underline !important;
+}

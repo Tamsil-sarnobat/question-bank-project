@@ -17,25 +17,27 @@ async function main() {
   await mongoose.connect(mongoLink);
 }
 
+app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.urlencoded({ extended: true }));
-app.engine("ejs", ejsMate);
 
 
 
 app.get("/", (req, res) => {
-  res.send("Working On The Root!");
+  res.render("semesters/home");
 });
 
-app.get("/semester/:id", (req, res) => {
+app.get("/semesters/:id", (req, res) => {
   const semId = parseInt(req.params.id);
   const filteredSubjects = subjects.filter((sub) => {
     return sub.semester === semId
   });
   res.render("semester.ejs", { semId, subjects: filteredSubjects });
 });
+
+
 
 app.listen(8080, () => {
   console.log("listening on the port 8080");
