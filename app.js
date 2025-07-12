@@ -29,6 +29,17 @@ app.get("/", (req, res) => {
   res.render("semesters/home");
 });
 
+
+app.get("/semester/login",(req,res)=>{
+  res.render("users/loginForm")
+})
+
+app.get("/semester/signin",(req,res)=>{
+  res.render("users/signinForm");
+})
+
+
+
 app.listen(8080,()=>{
     console.log("listening on the port 8080");
 });
