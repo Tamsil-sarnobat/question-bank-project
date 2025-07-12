@@ -25,11 +25,9 @@ app.use(express.urlencoded({extended:true}));
 app.engine("ejs",ejsMate);
 
 
-
-
-app.get("/",(req,res)=>{
-    res.send("Working On The Root!");
-})
+app.get("/", (req, res) => {
+  res.render("semesters/home");
+});
 
 app.listen(8080,()=>{
     console.log("listening on the port 8080");
