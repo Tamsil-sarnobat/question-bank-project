@@ -1,5 +1,3 @@
-//Temporary Subjects Data
-
 const subjects = [
   //sem1
   {
@@ -130,7 +128,7 @@ const subjects = [
  },
 
  { 
-  name: "Subject 4", 
+  name: "Subject 5", 
   semester: 5 
  },
 
@@ -156,7 +154,7 @@ const subjects = [
  },
 
  { 
-  name: "Subject 4", 
+  name: "Subject 5", 
   semester: 6 
  },
 ];

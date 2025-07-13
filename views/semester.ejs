@@ -2,7 +2,7 @@
 
 <div class="full-width-wrapper">
 <main class="container-fluid py-3 mb-4">
-  <ul class="nav justify-content-center bg-body-secondary">
+  <ul class="nav justify-content-center bg-body-secondary flex-wrap">
     <li class="nav-item">
       <a class="nav-link" href="#">Suggest Question</a>
     </li>
@@ -19,7 +19,7 @@
     <h1 class="sem-title text-center fw-bold mb-5 mt-3">Semester-<%= semId %></h1>
 
     <div class="subject-container row justify-content-center g-4 ">
-      <% subjects.slice(0, 3).forEach(subject => { %>
+      <%  Subjects.slice(0, 3).forEach(subject => { %>
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
         <div class="subject text-center mx-auto">
           <h5 class="subject-title fw-semibold mb-2"><%= subject.name %></h5>
@@ -32,7 +32,7 @@
     <div
       class="subject-container d-flex flex-wrap row justify-content-center g-4 mt-2"
     >
-      <% subjects.slice(3).forEach(subject => { %>
+      <% Subjects.slice(3).forEach(subject => { %>
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
         <div class="subject text-center">
           <h5 class="subject-title fw-semibold mb-2"><%= subject.name %></h5>
