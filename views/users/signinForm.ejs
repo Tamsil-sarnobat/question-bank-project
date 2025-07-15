@@ -4,24 +4,55 @@
     <h3>Sign In</h3>
 </div>
 <div class="col-6 offset-3 mt-5 mb-3">
-<form class="needs-validation" novalidate>
+<form  action ="/semester/signin" class="needs-validation" method="POST" novalidate>
+
   <div class="mb-3">
-    <label for="exampleInputUser" class="form-label">Enter Username</label>
-    <input type="text" class="form-control" id="exampleInputUser" aria-describedby="userHelp" required>
+    <label for="username" class="form-label">Enter Username</label>
+    <input type="text" class="form-control" id="username" name="username" aria-describedby="userHelp" required>
     <div class="valid-feedback">username Looks Good!</div>
     <div class="invalid-feedback">username is required.</div>
   </div>
 
-        <div class="mb-3">
-            <label for="email" class="form-label">Enter Email</label>
-            <input type="email" name="email" class="form-control" required>
-            <div class="invalid-feedback">Email is required.</div>
-        </div>
+  <div class="mb-3">
+      <label for="email" class="form-label">Enter Email</label>
+      <input type="email" name="email" class="form-control" required>
+      <div class="invalid-feedback">Email is required.</div>
+    </div>
 
   <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Enter Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" required>
+    <label for="password" class="form-label">Enter Password</label>
+    <input type="password" class="form-control" id="password" name="password" required>
     <div class="invalid-feedback">Password is required.</div>
+  </div>
+
+  <fieldset class="mb-3">
+  <label>I am a :</label>
+  <div class=" form-check"> 
+  <input class="form-check-input" type="radio" name="role" id="studentRadio" value="student" required>
+  <label class="form-check-label" for="studentRadio">
+    Student
+  </label>
+  </div>
+
+    <div class=" form-check"> 
+  <input class="form-check-input" type="radio" name="role" id="teacherRadio" value="teacher" required>
+  <label class="form-check-label" for="teacherRadio">
+    Teacher
+  </label>
+  </div>
+  </fieldset>
+  
+ 
+  <div class="mb-5">
+  <select class="form-select" name="semester" aria-label="Select your semester" required>
+        <option selected disabled value="">Select Your Semester</option>
+        <option value="sem1">Semester-1</option>
+        <option value="sem2">Semester-2</option>
+        <option value="sem3">Semester-3</option>
+        <option value="sem4">Semester-4</option>
+        <option value="sem5">Semester-5</option>
+        <option value="sem6">Semester-6</option>        
+  </select>
   </div>
 
   <button type="submit" class="btn btn-primary">Submit</button>

@@ -17,9 +17,11 @@
   "homepage": "https://github.com/Tamsil-sarnobat/question-bank-project#readme",
   "description": "",
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "ejs": "^3.1.10",
     "ejs-mate": "^4.0.0",
     "express": "^5.1.0",
+    "joi": "^17.13.3",
     "mongoose": "^8.16.3"
   }
 }
