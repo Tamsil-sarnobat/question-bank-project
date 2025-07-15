@@ -1,8 +1,12 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const app = express();
 const path = require("path");
+const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
+const User = require("./models/users");
+const ExpressError = require("./utils/ExpressError");
+const userSchema = require("./schema.js");
+const wrapAsync = require("./utils/wrapAsync.js");
 const Subject = require("./models/subject.js");
 
 const mongoLink = "mongodb://127.0.0.1:27017/QBProject";
@@ -25,9 +29,57 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
+
+app.get("/verify",(req,res)=>{
+  res.send(req.signedCookies);
+});
+
+const validateUser = (err,req,res,next)=>{
+  let {error} = userSchema.validate(req.body);
+  if(error){
+    throw new ExpressError(404,error.details[0].message);
+  }else{
+    next(err);
+  }
+};
+
+
 app.get("/", (req, res) => {
   res.render("semesters/home");
 });
+
+
+app.get("/semester/login",(req,res)=>{
+  res.render("users/loginForm")
+})
+
+app.get("/semester/signin",(req,res)=>{
+  res.render("users/signinForm");
+})
+
+app.post("/semester/signin",validateUser,wrapAsync(async (req,res)=>{
+  let {username,email,password,role,semester} = req.body;
+  let newUser = new User({
+    username:username,
+    email:email,
+    password:password,
+    role:role,
+    semester:semester
+  })
+
+  await newUser.save();
+  res.redirect("/");
+}));
+
+
+
+
+app.use((err,req,res,next)=>{
+  let {status=500,message="something went wrong"} = err;
+  res.status(status).send(message);
+});
+
+
 
 app.get("/semesters/:id", async(req, res) => {
   const semId = parseInt(req.params.id);
@@ -40,3 +92,4 @@ app.get("/semesters/:id", async(req, res) => {
 app.listen(8080, () => {
   console.log("listening on the port 8080");
 });
+
