@@ -8,6 +8,8 @@ const ExpressError = require("./utils/ExpressError");
 const userSchema = require("./schema.js");
 const wrapAsync = require("./utils/wrapAsync.js");
 const Subject = require("./models/subject.js");
+const feedback = require("./models/feedback.js");
+const Feedback = require("./models/feedback.js");
 
 const mongoLink = "mongodb://127.0.0.1:27017/QBProject";
 
@@ -80,12 +82,24 @@ app.use((err,req,res,next)=>{
 });
 
 
-
+//Semester route
 app.get("/semesters/:id", async(req, res) => {
   const semId = parseInt(req.params.id);
   const Subjects = await Subject.find({semester: semId});
   res.render("semester.ejs",{ semId, Subjects });
 });
+
+//feedback routes
+app.get("/feedback", (req,res) => {
+  res.render("feedback/feedback.ejs");
+});
+
+app.post("/feedback", async (req,res) => {
+  const feedback = new Feedback(req.body);
+  await feedback.save();
+  res.render("feedback/thankyou");
+});
+
 
 
 
