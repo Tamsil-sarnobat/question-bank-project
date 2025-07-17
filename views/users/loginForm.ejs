@@ -4,17 +4,17 @@
     <h3>Login</h3>
 </div>
 <div class="col-6 offset-3 mt-5 mb-5">
-<form class="needs-validation" novalidate>
+<form method="post" action="/semester/login" class="needs-validation" novalidate>
   <div class="mb-3">
     <label for="exampleInputUser" class="form-label">Username</label>
-    <input type="text" class="form-control" id="exampleInputUser" aria-describedby="userHelp" required>
+    <input type="text" class="form-control" name="username" id="exampleInputUser" aria-describedby="userHelp" required>
         <div class="invalid-feedback">
             Username is required.
         </div>
   </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" required>
+    <input type="password" class="form-control" name="password" id="exampleInputPassword1" required>
        <div class="invalid-feedback">
             Password is required.
         </div>

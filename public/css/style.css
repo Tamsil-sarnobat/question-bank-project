@@ -2,10 +2,13 @@
     font-family: "Poppins", sans-serif;
 }
 
+body{
+    background-color: #F6FFFE;
+}
+
 
 /*Navbar*/
 .navbar{
-   
     background-color: #B4DCE7 !important;
 }
 .navLogo{
@@ -86,9 +89,6 @@
   
 }
 
-body{
-    background-color: #F6FFFE;
-}
 
 /*semesters block*/
 .semesters-div{
