@@ -50,7 +50,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new localStrategy(User.authenticate()));
-
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -113,11 +112,10 @@ app.get("/semester/login",(req,res)=>{
 app.post("/semester/login",passport.authenticate("local",{
   failureRedirect:"/semester/login",
   failureFlash:true,
-}),async (req,res)=>{
+}),wrapAsync(async (req,res)=>{
    req.flash("success","welcom Back to regal College");
    return res.redirect("/");
-})
-
+}))
 
 
 app.get("/semesters/:id", async(req, res) => {
@@ -127,9 +125,14 @@ app.get("/semesters/:id", async(req, res) => {
 });
 
 
+app.use((req, res, next) => {
+  next(new ExpressError(404, "Page not found!"));
+});
+
+
 app.use((err,req,res,next)=>{
   let {status=500,message="something went wrong"} = err;
-  res.status(status).send(message);
+  res.status(status).render("semesters/error",{message});
 });
 
 
