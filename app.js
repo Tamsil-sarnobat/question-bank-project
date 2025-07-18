@@ -8,8 +8,8 @@ const ExpressError = require("./utils/ExpressError");
 const userSchema = require("./schema.js");
 const wrapAsync = require("./utils/wrapAsync.js");
 const Subject = require("./models/subject.js");
-const feedback = require("./models/feedback.js");
 const Feedback = require("./models/feedback.js");
+const { feedbackSchema } = require("./fbSchema");
 
 const mongoLink = "mongodb://127.0.0.1:27017/QBProject";
 
@@ -28,6 +28,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 
 
@@ -43,6 +44,16 @@ const validateUser = (err,req,res,next)=>{
   }else{
     next(err);
   }
+};
+
+//feedback validate middleware fn
+const validateFeedback = (req,res,next) => {
+  console.log(req.body);
+  const {error} = feedbackSchema.validate(req.body);
+  if(error) {
+    throw new ExpressError(404, error.details[0].message);
+  }
+  next();
 };
 
 
@@ -74,14 +85,6 @@ app.post("/semester/signin",validateUser,wrapAsync(async (req,res)=>{
 }));
 
 
-
-
-app.use((err,req,res,next)=>{
-  let {status=500,message="something went wrong"} = err;
-  res.status(status).send(message);
-});
-
-
 //Semester route
 app.get("/semesters/:id", async(req, res) => {
   const semId = parseInt(req.params.id);
@@ -94,14 +97,17 @@ app.get("/feedback", (req,res) => {
   res.render("feedback/feedback.ejs");
 });
 
-app.post("/feedback", async (req,res) => {
+app.post("/feedback", validateFeedback, async (req,res) => {
   const feedback = new Feedback(req.body);
   await feedback.save();
   res.render("feedback/thankyou");
 });
 
 
-
+app.use((err,req,res,next)=>{
+  let {status=500,message="something went wrong"} = err;
+  res.status(status).send(message);
+});
 
 app.listen(8080, () => {
   console.log("listening on the port 8080");

@@ -1,8 +1,8 @@
 h1 {
-     display: flex;
+     /* display: flex;
      justify-content: center; 
-     align-items: center;     
+     align-items: center;      */
      height: 60vh;            
-     text-align: center;
+     /* text-align: center; */
      color: #213555;
 }

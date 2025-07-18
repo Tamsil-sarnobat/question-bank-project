@@ -24,6 +24,7 @@ main {
 
 .sem-title {
    color: #213555;
+   height: 5rem !important;
 }
 
 .q-link {

@@ -1,84 +1,141 @@
 <% layout("layouts/boilerplate") %>
 
-
 <div class="col-6 offset-3 mt-3">
-    <h3>Give your valuable feedback</h3>
+  <h3>Give your valuable feedback</h3>
 </div>
 
 <div class="col-6 offset-3 mt-4 mb-3">
-<form method="post" action="/feedback">
-  <div class="mb-3">
-    <label for="formGroupExampleInput" class="form-label">Name:</label>
-    <input
-      type="text"
-      name="name"
-      class="form-control"
-      id="formGroupExampleInput"
-    />
-  </div>
-
-  <div class="mb-5">
-  <select class="form-select" name="semester">
-    <option selected>Select your Semester</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-  </select>
-  </div>
-
-  <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label"
-      >write your feedback:</label
-    >
-    <textarea
-      class="form-control"
-      id="exampleFormControlTextarea1"
-      rows="3"
-      name="feedbackText"
-    ></textarea>
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">Rating:</label>
-    <div id="star-rating" class="text-warning fs-4">
-      <i class="bi bi-star" data-value="1"></i>
-      <i class="bi bi-star" data-value="2"></i>
-      <i class="bi bi-star" data-value="3"></i>
-      <i class="bi bi-star" data-value="4"></i>
-      <i class="bi bi-star" data-value="5"></i>
-    </div>
-    <input type="hidden" name="rating" id="rating-value" />
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">Was it helpful?:</label>
-    <div class="form-check">
+  <form method="post" action="/feedback" class="needs-validation" novalidate>
+    <div class="mb-3">
+      <label for="formGroupExampleInput" class="form-label">Name:</label>
       <input
-        class="form-check-input"
-        type="radio"
-        name="helpful"
-        id="radioDefault1"
-        value="true"
+        type="text"
+        name="name"
+        class="form-control"
+        id="formGroupExampleInput"
+        required
       />
-      <label class="form-check-label" for="radioDefault1"> yes </label>
+      <div class="valid-feedback">Looks good!</div>
     </div>
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="radio"
-        name="helpful"
-        id="radioDefault2"
-        value="false"
-      />
-      <label class="form-check-label" for="radioDefault2"> No </label>
+
+    <div class="mb-5">
+      <select class="form-select" name="semester" required>
+        <option value="" disabled selected>Select your Semester</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select>
+      <div class="invalid-feedback">Please select a valid semester.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label"
+        >Write your feedback:</label
+      >
+      <textarea
+        class="form-control"
+        id="exampleFormControlTextarea1"
+        rows="3"
+        name="feedbackText"
+        required
+      ></textarea>
+      <div class="invalid-feedback">Please give your feedback.</div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label d-block">Rating:</label>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="rating"
+          id="rating1"
+          value="1"
+          required
+        />
+        <label class="form-check-label text-warning fs-4" for="rating1"
+          >★</label
+        >
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="rating"
+          id="rating2"
+          value="2"
+          required
+        />
+        <label class="form-check-label text-warning fs-4" for="rating2"
+          >★★</label
+        >
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="rating"
+          id="rating3"
+          value="3"
+          required
+        />
+        <label class="form-check-label text-warning fs-4" for="rating3"
+          >★★★</label
+        >
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="rating"
+          id="rating4"
+          value="4"
+          required
+        />
+        <label class="form-check-label text-warning fs-4" for="rating4"
+          >★★★★</label
+        >
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="rating"
+          id="rating5"
+          value="5"
+          required
+        />
+        <label class="form-check-label text-warning fs-4" for="rating5"
+          >★★★★★</label
+        >
+      </div>
+
+      <div class="invalid-feedback">Please give a rating.</div>
+    </div>
+
+    <div class="mb-3">
+  <label class="form-label">Was it helpful?</label>
+  <div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="helpful" id="helpfulYes" value="true" required />
+      <label class="form-check-label" for="helpfulYes">Yes</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="helpful" id="helpfulNo" value="false" required />
+      <label class="form-check-label" for="helpfulNo">No</label>
     </div>
   </div>
+  <div class="invalid-feedback">
+    Please tell us if it was helpful.
+  </div>
+</div>
 
-  <button class="btn btn-primary" type="submit">Send Feedback</button>
-</form>
+
+    <button class="btn btn-primary" type="submit">Send Feedback</button>
+  </form>
 </div>
 
 <script src="/js/star-rating.js"></script>
