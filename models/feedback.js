@@ -26,11 +26,6 @@ const feedbackSchema = new Schema({
         max: 5,
     },
 
-    helpful: {
-        type: Boolean,
-        required: true,
-    },
-
     createdAt: {
         type: Date,
         default: Date.now,

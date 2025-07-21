@@ -1,19 +1,66 @@
 <% layout("/layouts/boilerplate")-%>
 
-
 <div class="homeContainer">
-    <div class="welcome">
-        <p>Welcome To Regal College Shringartali</p>
-        <p class="wlcmHead">BCA Department</p>
-        <span id="element"></span>
-    </div>
+  <div class="welcome">
+    <p>Welcome To Regal College Shringartali</p>
+    <p class="wlcmHead">BCA Department</p>
+    <span id="element"></span>
+  </div>
 
-    <div class="semesters-div">
-        <a href="/semesters/1" class="sem"><div class="semester">semester 1</div></a>
-        <a href="/semesters/2" class="sem"><div class="semester">semester 2</div></a>
-        <a href="/semesters/3" class="sem"><div class="semester">semester 3</div></a>
-        <a href="/semesters/4" class="sem"><div class="semester">semester 4</div></a>
-        <a href="/semesters/5" class="sem"><div class="semester">semester 5</div></a>
-        <a href="/semesters/6" class="sem"><div class="semester">semester 6</div></a>
+  <div class="semesters-div">
+    <a href="/semesters/1" class="sem"
+      ><div class="semester">semester 1</div></a
+    >
+    <a href="/semesters/2" class="sem"
+      ><div class="semester">semester 2</div></a
+    >
+    <a href="/semesters/3" class="sem"
+      ><div class="semester">semester 3</div></a
+    >
+    <a href="/semesters/4" class="sem"
+      ><div class="semester">semester 4</div></a
+    >
+    <a href="/semesters/5" class="sem"
+      ><div class="semester">semester 5</div></a
+    >
+    <a href="/semesters/6" class="sem"
+      ><div class="semester">semester 6</div></a
+    >
+  </div>
+
+  <section class="feedback-section container my-5">
+    <h2 class="fb-heading text-center mb-4">What Students Are Saying</h2>
+    <div class="row">
+      <% if (topFeedbacks && topFeedbacks.length > 0) { %> <% for(let fb of
+      topFeedbacks) { %>
+      <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+        <div class="feedback-card card">
+          <div class="card-body">
+            <p><strong>Semester:</strong> <%= fb.semester %></p>
+            <p>
+              <strong>Rating:</strong>
+              <% for (let i = 1; i <= 5; i++) { %> <% if (i <= fb.rating) { %>
+              <i class="bi bi-star-fill text-warning"></i>
+              <% } else { %>
+              <i class="bi bi-star text-secondary"></i>
+              <% } %> <% } %>
+            </p>
+            <p><%= fb.feedbackText %></p>
+            <% if (fb.name) { %>
+            <p class="text-muted mb-0">— <%= fb.name %></p>
+            <% } else { %>
+            <p class="text-muted mb-0">— Anonymous</p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <% } %>
     </div>
+    <div class="text-center">
+      <a href="/feedbacks" class="btn btn-primary">See All Feedbacks</a>
+    </div>
+    <% } else { %>
+    <p class="text-center">No feedbacks yet!</p>
+    <% } %>
+  </section>
 </div>

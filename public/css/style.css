@@ -2,10 +2,13 @@
     font-family: "Poppins", sans-serif;
 }
 
+body{
+    background-color: #F6FFFE;
+}
+
 
 /*Navbar*/
 .navbar{
-   
     background-color: #B4DCE7 !important;
 }
 .navLogo{
@@ -85,9 +88,6 @@
   
 }
 
-body{
-    background-color: #F6FFFE;
-}
 
 /*semesters block*/
 .semesters-div{
@@ -119,4 +119,24 @@ body{
     color: #213555;
     font-weight: 700;
     font-size: 1.4rem;
+}
+
+/*Student contribution page*/
+.quesBox{
+    box-shadow: 0.2rem 0.60rem 0.2rem 0.1rem  #B4DCE7;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+.quesBox:hover{
+     box-shadow: 0.3rem 0.75rem 0.3rem 0.2rem  #B4DCE7;
+     transform: scale(1.02,1.02);
+}
+
+.stdTitle{
+    text-align: center;
+}
+
+.edit-btns{
+    display: flex;
+    justify-content: space-evenly;
 }

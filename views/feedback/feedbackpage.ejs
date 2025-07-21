@@ -1,0 +1,39 @@
+<% layout("/layouts/boilerplate") -%>
+
+<div class="container my-5">
+  <h1 class="text-center mb-4 fw-bold page-title">All Feedbacks</h1>
+
+  <% if (allFeedbacks && allFeedbacks.length > 0) { %>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 feedback-section">
+    <% for (let fb of allFeedbacks) { %>
+    <div class="col">
+      <div class="card h-100 shadow-sm feedback-card">
+        <div class="card-body">
+          <h5 class="card-title mb-2">Semester: <%= fb.semester %></h5>
+          <h6 class="mb-2">
+            Rating: <% for (let i = 1; i <= 5; i++) { %> <% if (i <= fb.rating)
+            { %>
+            <i class="bi bi-star-fill text-warning"></i>
+            <% } else { %>
+            <i class="bi bi-star text-secondary"></i>
+            <% } %> <% } %>
+          </h6>
+          <p class="card-text"><%= fb.feedbackText %></p>
+        </div>
+        <div class="card-footer text-end">
+          <small class="text-muted">
+            — <%= fb.name ? fb.name : "Anonymous" %>
+          </small>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+  <% } else { %>
+  <p class="text-center text-muted">No feedbacks yet!</p>
+  <% } %>
+
+  <div class="text-center mt-5">
+    <a href="/" class="btn btn-outline-secondary"> ← Back to Home </a>
+  </div>
+</div>

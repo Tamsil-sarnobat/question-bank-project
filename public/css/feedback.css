@@ -6,3 +6,35 @@ h1 {
      /* text-align: center; */
      color: #213555;
 }
+
+/* feedback section */
+.feedback-section {
+     background-color: #f8f9fa;
+     padding: 40px 20px;
+     border-radius: 10px;
+}
+
+.feedback-card {
+  transition: transform 0.2s ease;
+}
+
+.feedback-card:hover {
+  transform: translateX(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.fb-heading {
+     color: #213555;
+}
+
+.page-title {
+     height: 5rem !important;
+}
+
+.feedback-card .card-text {
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+
+

@@ -1,0 +1,36 @@
+<% layout("/layouts/boilerplate")-%>
+
+<div class="container mt-3 mb-5 ">
+    <h2 class="stdTitle">Student Contribution</h2>
+    <div class="row">
+        
+    <%for(let ques of question){%>
+        <div class="col-md-4 mb-4 ">
+      <div class="card text-center mt-5 quesBox">
+          <div class="card-header">
+            <p>Contributer: <b><%=ques.username.username%></b></p>
+            <p>Subject : <b><i><%=ques.subject%></i></p></b>
+           </div>
+       <div class="card-body">
+           <h6 class="card-title">Semester = <i><%=ques.username.semester%></i></h6>
+           <p class="card-text">que. <u><b><%=ques.question%></b></u></p>
+           <div class="edit-btns">
+             <a href="/semester/newQues/<%=ques._id%>/edit" class="btn btn-outline-primary btn-sm">edit</a>
+           <form method="post" action="/semester/newQues/<%= ques._id %>?_method=DELETE">
+            <button class="btn btn-outline-danger btn-sm">delete</button>
+           </form></div>
+          
+           
+       </div>
+       <div class="card-footer text-body-secondary">
+          <% let createdDate = new Date(ques.createdAt); %>
+             <span>createdAt:</span>
+          <p> Date: <u><%= createdDate.toLocaleDateString('en-IN') %></u> &nbsp;&nbsp;&nbsp;&nbsp;
+            Time: <u><%= createdDate.toLocaleTimeString('en-IN') %></u>
+          </p>
+       </div>
+      </div>
+      </div>
+<%}%>
+</div>
+</div>
