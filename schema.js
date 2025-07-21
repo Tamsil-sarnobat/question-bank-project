@@ -8,4 +8,13 @@ const userSchema = joi.object({
         semester:joi.string().required()
     })
 
-module.exports = {userSchema};
+
+const feedbackSchema = joi.object({
+  name: joi.string().required(),
+  semester: joi.number().required().min(1).max(6),
+  feedbackText: joi.string().required(),
+  rating: joi.number().required().min(1).max(5),
+  helpful: joi.boolean().truthy("true", "yes").falsy("false", "no").required(),
+});
+
+module.exports = {userSchema, feedbackSchema};

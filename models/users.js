@@ -23,8 +23,15 @@ const userSchema = new Schema({
     semester:{
         type:String,
         required:true,
-    }
+    },
 
-})
+    feedbacks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Feedback"
+    }
+  ]
+
+});
 
 module.exports =  mongoose.model("User",userSchema);

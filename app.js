@@ -5,11 +5,11 @@ const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const User = require("./models/users");
 const ExpressError = require("./utils/ExpressError");
-const userSchema = require("./schema.js");
+const {userSchema, feedbackSchema} = require("./schema.js");
 const wrapAsync = require("./utils/wrapAsync.js");
 const Subject = require("./models/subject.js");
 const Feedback = require("./models/feedback.js");
-const { feedbackSchema } = require("./fbSchema");
+
 
 const mongoLink = "mongodb://127.0.0.1:27017/QBProject";
 
