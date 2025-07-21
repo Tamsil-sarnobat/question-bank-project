@@ -184,8 +184,14 @@ app.post("/semester/signin",validateUser,wrapAsync(async (req,res)=>{
          semester:semester
      })
   let user = await User.register(newUser,password);
-  req.flash("success","You Successfully sign-In, Welcome To Regal College!");
-  res.redirect("/");
+  req.login(user,(err)=>{
+    if(err){
+      return next(err);
+    }
+    req.flash("success","You Successfully sign-In, Welcome To Regal College!");
+    res.redirect("/");
+  })
+  
   }catch(e){
     req.flash("error",e.message);
     res.redirect("/semester/signin");
