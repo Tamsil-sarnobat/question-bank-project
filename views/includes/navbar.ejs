@@ -1,18 +1,23 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand aria-current=page" href="#"><img src="/Assets/regalLogo.png" alt="logo" class="navLogo"></a>
+    <a class="navbar-brand aria-current=page" href="/"><img src="/Assets/regalLogo.png" alt="logo" class="navLogo"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
        <div class="navbar-nav ms-auto">
+        <%if(currUser){%>
         <a class="nav-link" href="#">Task List</a>      
         <a class="nav-link" href="#">Post Task</a>  
-        <a class="nav-link" href="#">feedback</a>          
+        <a class="nav-link" href="#">feedback</a>   
+        <a class="nav-link" href="/logout"><b>Logout</b></a>     
+        <a class="nav-link" href="#"><img src="/Assets/userLogo.png" alt="user" class="userLogo"></a>  
+       <% }%>
+        <%if(!currUser){%>
         <a class="nav-link"  href="/semester/login"><b>Login</b></a>
-        <a class="nav-link" href="/semester/signin"><b>Sign In</b></a>  
-        <a class="nav-link" href="#"><img src="/Assets/userLogo.png" alt="user" class="userLogo"></a>        
+        <a class="nav-link" href="/semester/signin"><b>Sign In</b></a>
+        <%}%>        
       </div>
 
     </div>
