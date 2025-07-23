@@ -51,6 +51,10 @@ app.use(session(sessionOption));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;  
+  next();
+});
 
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -281,6 +285,28 @@ app.get("/feedbacks", async (req,res) => {
   .populate("user");
 
   res.render("feedback/feedbackpage.ejs", {allFeedbacks});
+});
+
+
+//feedback delete route
+app.delete("/feedbacks/:id", async (req, res) => {
+  const { id } = req.params;
+  const feedback = await Feedback.findById(id);
+
+  if (!feedback) {
+    req.flash("error", "Feedback not found");
+    return res.redirect("/feedbacks");
+  }
+
+  // // Optional: Only allow owner to delete
+  // if (!feedback.user.equals(req.user._id)) {
+  //   req.flash("error", "You do not have permission to delete this feedback");
+  //   return res.redirect("/feedbacks");
+  // }
+
+  await Feedback.findByIdAndDelete(id);
+  req.flash("success", "Feedback deleted successfully");
+  res.redirect("/feedbacks");
 });
 
 
