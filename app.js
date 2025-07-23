@@ -283,6 +283,7 @@ app.get("/feedbacks", async (req,res) => {
   res.render("feedback/feedbackpage.ejs", {allFeedbacks});
 });
 
+
 //page  not found
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page not found!"));

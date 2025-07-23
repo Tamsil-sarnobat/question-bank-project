@@ -14,12 +14,16 @@
        <div class="card-body">
            <h6 class="card-title">Semester = <i><%=ques.username.semester%></i></h6>
            <p class="card-text">que. <u><b><%=ques.question%></b></u></p>
-           <div class="edit-btns">
+           <% if (currUser && currUser._id.toString() === ques.username._id.toString()){%>
+
+             <div class="edit-btns">
              <a href="/semester/newQues/<%=ques._id%>/edit" class="btn btn-outline-primary btn-sm">edit</a>
            <form method="post" action="/semester/newQues/<%= ques._id %>?_method=DELETE">
             <button class="btn btn-outline-danger btn-sm">delete</button>
            </form></div>
           
+            <%}%>
+
            
        </div>
        <div class="card-footer text-body-secondary">
