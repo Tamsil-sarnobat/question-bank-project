@@ -1,0 +1,38 @@
+<% layout("/layouts/boilerplate")-%>
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <%for(let teach of task){%>
+            <div class="col-md-4 mb-4 ">
+                <div class="card mb-4">
+                  <div class="card-header task-header"> 
+                    <span>Created For : <b><%=teach.semester%></b></span>   
+                    <span>Date: <i><%= teach.createdAt.toLocaleDateString('en-IN') %></i></span>
+                  </div>
+                  <div class="card-body">
+                   <figure>
+                     <blockquote class="blockquote">
+                        <p>title = <b><%= teach.title %></b></p>
+                       <p><%= teach.description%></p>
+                     </blockquote>
+                     <hr>
+                     <figcaption class="blockquote-footer mt-2">
+                       Created By : <cite title="Source Title"><%=teach.createdBy.username%></cite>
+                     </figcaption>
+                   </figure>
+                   <%if(teacher){%>
+                      <div class="task-btns">
+                       <a href="/semester/task/<%=teach._id%>/editForm" class="btn btn-outline-primary btn-sm">edit</a>
+                       <form action="/semester/task/<%= teach._id %>?_method=DELETE" method="POST" >
+                        <button class="btn btn-outline-danger btn-sm">delete</button>
+                       </form>
+                      </div> 
+                   <%}%>
+                  </div>
+                </div>
+                
+            </div>    
+        <%}%>
+
+    </div>
+</div>

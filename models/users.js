@@ -15,7 +15,9 @@ const userSchema = new Schema({
     },
     semester:{
         type:String,
-        required:true,
+        required: function () {
+          return this.role === "student";
+        },
     },
 
     feedbacks: [

@@ -5,7 +5,11 @@ const userSchema = joi.object({
         email:joi.string().required(),
         password:joi.string().required(),
         role:joi.string().required(),
-        semester:joi.string().required()
+        semester: joi.when("role", {
+                  is: "student",
+                  then: joi.string().required(),
+                  otherwise: joi.string().optional().allow("")
+                 })
     })
 
 
