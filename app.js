@@ -15,6 +15,8 @@ const  localStrategy = require("passport-local");
 const User = require("./models/users");
 const flash = require("connect-flash");
 const Question = require("./models/newQues.js");
+const questionPaperRoutes = require("./routes/questionPapers");
+
 
 const mongoLink = "mongodb://127.0.0.1:27017/QBProject";
 
@@ -62,7 +64,6 @@ passport.deserializeUser(User.deserializeUser());
 
 
 
-
 //Validate user
 const validateUser = (req,res,next)=>{
   let {error} = userSchema.validate(req.body);
@@ -86,13 +87,14 @@ const validateFeedback = (req,res,next) => {
 
 
 //flash message
-app.use((req,res,next)=>{
-  res.locals.error = req.flash("error");
-  res.locals.success = req.flash("success");
+app.use((req, res, next) => {
   res.locals.currUser = req.user;
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
   next();
 });
 
+app.use("/", questionPaperRoutes);
 
 
 //is Logged in middlewares
