@@ -140,3 +140,17 @@ body{
     display: flex;
     justify-content: space-evenly;
 }
+
+/*Task*/
+.task-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.task-btns{
+    display: flex;
+    justify-content:end;
+}
+.task-btns a,button{
+ margin-right: 1rem;
+}

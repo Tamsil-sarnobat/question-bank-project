@@ -8,8 +8,10 @@
 
        <div class="navbar-nav ms-auto">
         <%if(currUser){%>
-        <a class="nav-link" href="#">Task List</a>      
-        <a class="nav-link" href="#">Post Task</a>  
+        <a class="nav-link" href="/semester/taskPage">Task List</a> 
+        <%if(teacher){%>   
+        <a class="nav-link" href="/semester/task">Post Task</a>  
+        <%}%>
         <a class="nav-link" href="/feedback">feedback</a>           
         <a class="nav-link" href="/logout"><b>Logout</b></a>     
         <a class="nav-link" href="#"><img src="/Assets/userLogo.png" alt="user" class="userLogo"></a>  
