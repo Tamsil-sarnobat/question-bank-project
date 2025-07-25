@@ -17,7 +17,6 @@ const feedbackSchema = joi.object({
   name: joi.string().optional(),
   feedbackText: joi.string().required(),
   rating: joi.number().required().min(1).max(5),
-  helpful: joi.boolean().truthy("true", "yes").falsy("false", "no").required(),
 });
 
 module.exports = {userSchema, feedbackSchema};
