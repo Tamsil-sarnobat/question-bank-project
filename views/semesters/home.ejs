@@ -54,8 +54,6 @@
             <p class="text-muted mb-0">— Anonymous</p>
             <% } %> <% if (currentUser && fb.user && fb.user._id.toString() ===
             currentUser._id.toString()) { %>
-
-              
             <form
               action="/feedbacks/<%= fb._id %>?_method=DELETE"
               method="POST"
