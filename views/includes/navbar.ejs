@@ -14,7 +14,7 @@
         <%}%>
         <a class="nav-link" href="/feedback">feedback</a>           
         <a class="nav-link" href="/logout"><b>Logout</b></a>     
-        <a class="nav-link" href="#"><img src="/Assets/userLogo.png" alt="user" class="userLogo"></a>  
+        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="/Assets/userLogo.png" alt="user" class="userLogo"></a>  
        <% }%>
         <%if(!currUser){%>
         <a class="nav-link"  href="/semester/login"><b>Login</b></a>
@@ -26,3 +26,5 @@
     </div>
   </div>
 </nav>
+
+<%- include("modal");%> 

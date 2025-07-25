@@ -1,0 +1,17 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <% if (currUser) { %>
+          <p><strong>Username:</strong> <%= currUser.username %></p>
+          <p><strong>Role:</strong> <%= currUser.role %></p>
+        <% } else { %>
+           <p>User not logged in</p>
+        <% } %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
