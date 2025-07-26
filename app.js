@@ -9,6 +9,7 @@ const {userSchema, feedbackSchema} = require("./schema.js");
 const wrapAsync = require("./utils/wrapAsync.js");
 const Subject = require("./models/subject.js");
 const Feedback = require("./models/feedback.js");
+const Task = require("./models/task.js");
 const session = require("express-session");
 const passport = require("passport");
 const  localStrategy = require("passport-local");
@@ -54,7 +55,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
+  res.locals.currentUser = req.user;  
   next();
 });
 
@@ -89,12 +90,36 @@ const validateFeedback = (req,res,next) => {
 //flash message
 app.use((req, res, next) => {
   res.locals.currUser = req.user;
+
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+  res.locals.teacher = req.user &&  req.user.role ===  "teacher";
   next();
 });
 
 app.use("/", questionPaperRoutes);
+
+//isQuestionOwner
+const isQuestionOwner = async (req,res,next)=>{
+  let {id} = req.params;
+  let question = await Question.findById(id);
+  if (!question.username.equals(res.locals.currUser._id)) {
+    req.flash("error", "You are not the owner of the listings");
+    return res.redirect("/semester/newQuePage");
+  }
+  next();
+}
+
+
+//isTeacher/admin
+const isTeacher = async (req,res,next)=>{
+  if(req.user && req.user.role ===  "teacher"){
+    return next();
+  }
+  req.flash("error","You are Not authorized to Assign task");
+  return res.redirect("/");
+}
+
 
 
 //is Logged in middlewares
@@ -161,7 +186,7 @@ app.post("/semester/newQues",wrapAsync(async (req,res)=>{
 
 //suggested question edit get request
 
-app.get("/semester/newQues/:id/edit",isLoggedIn,wrapAsync(async (req,res)=>{
+app.get("/semester/newQues/:id/edit",isQuestionOwner,isLoggedIn,wrapAsync(async (req,res)=>{
   let {id} = req.params;
   const question = await  Question.findById(id).populate("username");
   res.render("suggestedQuestion/suggQuesEdit",{question});
@@ -170,7 +195,7 @@ app.get("/semester/newQues/:id/edit",isLoggedIn,wrapAsync(async (req,res)=>{
 
 //suggested question edit PUT request
 
-app.put("/semester/newQues/:id",wrapAsync(async (req,res)=>{
+app.put("/semester/newQues/:id",isQuestionOwner,wrapAsync(async (req,res)=>{
   let {id} = req.params;
   let {subject,question}= req.body;
   console.log(id);
@@ -182,9 +207,9 @@ app.put("/semester/newQues/:id",wrapAsync(async (req,res)=>{
  res.redirect("/semester/newQuePage");
 }))
 
-//suggested question edit PUT request
+//suggested question delete || delete request
 
-app.delete("/semester/newQues/:id",wrapAsync(async(req,res)=>{
+app.delete("/semester/newQues/:id",isQuestionOwner,wrapAsync(async(req,res)=>{
   let {id} = req.params;
   let deletedQues = await Question.findByIdAndDelete(id);
   console.log(deletedQues);
@@ -266,7 +291,7 @@ app.get("/feedback", isLoggedIn, (req,res) => {
   res.render("feedback/feedback.ejs");
 });
 
-app.post("/feedback", isLoggedIn , wrapAsync(async (req,res) => {
+app.post("/feedback",validateFeedback, isLoggedIn , wrapAsync(async (req,res) => {
   const feedback = new Feedback(req.body);
   feedback.user = req.user._id;
   await feedback.save();
@@ -299,15 +324,68 @@ app.delete("/feedbacks/:id", async (req, res) => {
     return res.redirect("/feedbacks");
   }
 
-  // Optional: Only allow owner to delete
-  // if (!feedback.user.equals(req.user._id)) {
-  //   req.flash("error", "You do not have permission to delete this feedback");
-  //   return res.redirect("/feedbacks");
-  // }
-
   await Feedback.findByIdAndDelete(id);
   req.flash("success", "Feedback deleted successfully");
   res.redirect("/feedbacks");
+});
+
+
+
+//tasks page
+app.get("/semester/taskPage",isLoggedIn,wrapAsync(async (req,res)=>{
+  const task = await Task.find({}).populate("createdBy")
+  res.render("Tasks/taskPage.ejs",{task});
+}))
+
+
+//task Form
+app.get("/semester/task",isLoggedIn,isTeacher,(req,res)=>{
+  res.render("Tasks/taskForm.ejs");
+})
+
+
+//task post
+app.post("/semester/task",isLoggedIn,isTeacher,wrapAsync(async (req,res)=>{
+  let {title,description,semester} = req.body;
+  let createdBy = req.user._id;
+  let newTask = new Task({
+    title:title,
+    description:description,
+    semester:semester,
+    createdBy:createdBy
+  });
+  let currTask = await newTask.save();
+  console.log(currTask);
+  res.redirect("/semester/taskPage");
+}));
+
+//task edit
+app.get("/semester/task/:id/editForm",async (req,res)=>{
+  let {id} = req.params;
+  let task = await Task.findById(id).populate("createdBy");
+  res.render("Tasks/taskEditForm.ejs",{task});
+});
+
+//task update
+app.put("/semester/task/:id",async (req,res)=>{
+      let {id} = req.params;
+      let { title, description, semester} = req.body;
+
+      let newTask = await Task.findByIdAndUpdate(
+        id,
+        {title,description,semester},
+        {runValidators:true,new:true}
+      )
+      console.log(newTask);
+      res.redirect("/semester/taskPage");
+});
+
+//task delete
+app.delete("/semester/task/:id",async (req,res)=>{
+  let {id} = req.params;
+  let deletedTask = await Task.findByIdAndDelete(id);
+  console.log(deletedTask);
+  res.redirect("/semester/taskPage");
 });
 
 

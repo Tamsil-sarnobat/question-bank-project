@@ -6,57 +6,51 @@
   <% if (allFeedbacks && allFeedbacks.length > 0) { %>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 feedback-section">
       <% for (let fb of allFeedbacks) { %>
-        <% if (fb.user) { %>
-          <div class="col">
-            <div class="card h-100 shadow-sm feedback-card">
-              <div class="card-body">
-                <!-- Semester (optional) -->
-                <!-- <h5 class="card-title mb-2">
-                  Semester: <%= fb.user.semester.replace("sem", "") %>
-                </h5> -->
+        <div class="col">
+          <div class="card h-100 shadow-sm feedback-card">
+            <div class="card-body">
+              <% if (fb.semester) { %>
+                <h5 class="card-title mb-2">Semester: <%= fb.semester %></h5>
+              <% } %>
 
-                
-                <h6 class="mb-2">
-                  Rating:
-                  <% for (let i = 1; i <= 5; i++) { %>
-                    <% if (i <= fb.rating) { %>
-                      <i class="bi bi-star-fill text-warning"></i>
-                    <% } else { %>
-                      <i class="bi bi-star text-secondary"></i>
-                    <% } %>
+              <h6 class="mb-2">
+                Rating:
+                <% for (let i = 1; i <= 5; i++) { %>
+                  <% if (i <= fb.rating) { %>
+                    <i class="bi bi-star-fill text-warning"></i>
+                  <% } else { %>
+                    <i class="bi bi-star text-secondary"></i>
                   <% } %>
-                </h6>
-
-                
-                <p class="card-text"><%= fb.feedbackText %></p>
-              </div>
-
-        
-              <div class="card-footer d-flex justify-content-between align-items-center">
-                <small class="text-muted mb-0">
-                  — <%= fb.user.name || fb.user.username || "Anonymous" %>
-                </small>
-
-          
-                <% if (currentUser && fb.user._id.toString() === currentUser._id.toString()) { %>
-                  <form
-                    action="/feedbacks/<%= fb._id %>?_method=DELETE"
-                    method="POST"
-                    class="d-inline"
-                  >
-                    <button
-                      type="submit"
-                      class="btn btn-sm btn-danger"
-                      onclick="return confirm('Are you sure you want to delete this feedback?')"
-                    >
-                      Delete
-                    </button>
-                  </form>
                 <% } %>
-              </div>
+              </h6>
+
+              <p class="card-text"><%= fb.feedbackText %></p>
+            </div>
+
+            <div class="card-footer d-flex justify-content-between align-items-center">
+              <small class="text-muted mb-0">
+                — <%= (fb.user && (fb.user.name || fb.user.username)) || fb.name || "Anonymous" %>
+              </small>
+
+              <% if (currentUser && fb.user && fb.user._id.toString() === currentUser._id.toString()) { %>
+                <form
+                  action="/feedbacks/<%= fb._id %>?_method=DELETE"
+                  method="POST"
+                  class="d-inline"
+                >
+                  <button
+                    type="submit"
+                    class="btn btn-sm btn-danger"
+                    onclick="return confirm('Are you sure you want to delete this feedback?')"
+                  >
+                    Delete
+                  </button>
+                </form>
+              <% } %>
             </div>
           </div>
-        <% } %>
+        </div>
+>>>>>>> 63c3879946e46d490259e1c0fc4b07a335b4ddea
       <% } %>
     </div>
   <% } else { %>
