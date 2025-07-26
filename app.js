@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV != "production") {
+  require('dotenv').config();
+}
+
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -5,7 +9,7 @@ const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
-const {userSchema, feedbackSchema} = require("./schema.js");
+const {userSchema, feedbackSchema, questionPaperSchema} = require("./schema.js");
 const wrapAsync = require("./utils/wrapAsync.js");
 const Subject = require("./models/subject.js");
 const Feedback = require("./models/feedback.js");

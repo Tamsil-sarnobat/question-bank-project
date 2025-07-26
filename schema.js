@@ -19,4 +19,9 @@ const feedbackSchema = joi.object({
   rating: joi.number().required().min(1).max(5),
 });
 
-module.exports = {userSchema, feedbackSchema};
+const questionPaperSchema = joi.object({
+  subject: joi.string().required(),
+  semester: joi.number().integer().min(1).max(6).required(),
+});
+
+module.exports = {userSchema, feedbackSchema, questionPaperSchema};

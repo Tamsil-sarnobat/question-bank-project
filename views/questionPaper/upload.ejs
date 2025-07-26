@@ -1,31 +1,38 @@
-<% layout('layouts/boilerplate') %>
+<% layout("/layouts/boilerplate")-%>
 
-<div class="container mt-5">
-  <h2>Upload Question Paper</h2>
-  <form action="/questionPapers" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
-    <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input type="text" name="title" class="form-control" id="title" required>
-      <div class="invalid-feedback">Title is required</div>
-    </div>
 
-    <div class="mb-3">
+<div class="container">
+<div class="col-6 offset-3 mt-5">
+  <h2 class="heading text-center">Upload Question Paper</h2>
+</div>
+
+<div class="col-6 offset-3 mt-4 mb-5">
+  <form
+    action="/questionPaper/upload-paper"
+    method="POST"
+    enctype="multipart/form-data" class="needs-validation" novalidate>
+
+    <input type="hidden" name="semester" value="<%= semester %>" />
+  
+    <div class="mb-4">
       <label for="subject" class="form-label">Subject</label>
-      <select name="subject" id="subject" class="form-select" required>
-        <option value="">Select a Subject</option>
-        <% subjects.forEach(subject => { %>
-          <option value="<%= subject._id %>"><%= subject.name %></option>
-        <% }); %>
-      </select>
-      <div class="invalid-feedback">Subject is required</div>
+      <select name="subject" class="form-control" required>
+  <option value="" disabled selected>Select Subject</option>
+  <% Subjects.forEach(subject => { %>
+    <option value="<%= subject.name %>"><%= subject.name %></option>
+  <% }) %>
+</select>
+      <div class="invalid-feedback">Please select subject</div>
     </div>
+    
 
-    <div class="mb-3">
-      <label for="file" class="form-label">Upload PDF</label>
-      <input type="file" name="file" id="file" class="form-control" accept=".pdf" required>
-      <div class="invalid-feedback">Please upload a PDF</div>
+    <div class="mb-4">
+      <label for="file" class="form-label">Upload File (PDF/Image)</label>
+      <input type="file" name="file" id="file" accept=".pdf,image/*" class="form-control" required />
+      <div class="invalid-feedback">Please upload the file</div>
     </div>
 
     <button type="submit" class="btn btn-primary">Upload</button>
   </form>
+</div>
 </div>

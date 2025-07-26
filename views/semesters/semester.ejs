@@ -1,7 +1,7 @@
 <% layout("layouts/boilerplate") %>
 
 <div class="full-width-wrapper">
-<main class="container-fluid py-3 mb-4">
+<main class="container-fluid mb-4 ">
   <ul class="nav justify-content-center bg-body-secondary flex-wrap">
     <li class="nav-item">
       <a class="nav-link" href="/semester/newQues">Suggest Question</a>
@@ -9,8 +9,10 @@
     <li class="nav-item">
       <a class="nav-link" href="/semester/newQuePage">Student Contribution</a>
     </li>
+
+
     <li class="nav-item">
-      <a class="nav-link" href="#">Upload Question Paper</a>
+      <a class="nav-link" href="/upload/semester/<%= semId %>">Upload Question Paper</a>
     </li>
   </ul>
 

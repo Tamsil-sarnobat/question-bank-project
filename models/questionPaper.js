@@ -1,19 +1,28 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
-const questionPaperSchema = new mongoose.Schema({
-    title: String,
-    subject: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Subject"
-    },
-    fileUrl: String,
-    uploadedAt: {
-        type: Date,
-        default: Date.now
-    }
+const quesPaperSchema = new Schema({
+  subject: {
+    type: String,
+    required: true,
+  },
+  semester: { 
+    type: String, 
+    required: true 
+  },
+  file: {
+    url: String,
+    filename: String,
+    type: String,
+  },
+  uploadedBy: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+  uploadedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-const QuestionPaper = mongoose.model("QuestionPaper", questionPaperSchema);
-module.exports = QuestionPaper;
+module.exports = mongoose.model("Paper", quesPaperSchema);
