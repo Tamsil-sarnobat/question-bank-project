@@ -1,38 +1,55 @@
-<% layout("/layouts/boilerplate")-%>
-
+<% layout("layouts/boilerplate") %>
 
 <div class="container">
-<div class="col-6 offset-3 mt-5">
-  <h2 class="heading text-center">Upload Question Paper</h2>
-</div>
+  <h2 class="mt-4 mb-4 text-center">Upload Question Paper</h2>
+  <div class="col-6 offset-3 mt-4 mb-5">
+    <form 
+      action="/semester/<%= semId %>/upload"
+      method="POST" 
+      enctype="multipart/form-data"
+      class="needs-validation"
+      novalidate
+    >
+      <!-- Hidden field to send semester -->
+      <input type="hidden" name="semester" value="<%= semId %>">
 
-<div class="col-6 offset-3 mt-4 mb-5">
-  <form
-    action="/questionPaper/upload-paper"
-    method="POST"
-    enctype="multipart/form-data" class="needs-validation" novalidate>
+      <!-- Subject Dropdown -->
+      <div class="mb-3">
+        <label for="subjectId" class="form-label">Subject</label>
+        <select class="form-select form-control" name="subjectId" id="subjectId" required>
+          <% subjects.forEach(subject => { %>
+            <option value="<%= subject.name %>"><%= subject.name %></option>
+          <% }); %>
+        </select>
+        <div class="invalid-feedback">Please select subject</div>
+      </div>
 
-    <input type="hidden" name="semester" value="<%= semester %>" />
-  
-    <div class="mb-4">
-      <label for="subject" class="form-label">Subject</label>
-      <select name="subject" class="form-control" required>
-  <option value="" disabled selected>Select Subject</option>
-  <% Subjects.forEach(subject => { %>
-    <option value="<%= subject.name %>"><%= subject.name %></option>
-  <% }) %>
-</select>
-      <div class="invalid-feedback">Please select subject</div>
-    </div>
-    
+      <!-- Year -->
+      <div class="mb-3">
+        <label for="year" class="form-label">Year</label>
+        <input type="number" class="form-control" id="year" name="year" required min="2000" max="2099">
+        <div class="invalid-feedback">Enter the year</div>
+      </div>
 
-    <div class="mb-4">
-      <label for="file" class="form-label">Upload File (PDF/Image)</label>
-      <input type="file" name="file" id="file" accept=".pdf,image/*" class="form-control" required />
-      <div class="invalid-feedback">Please upload the file</div>
-    </div>
+      <!-- Exam Type -->
+      <div class="mb-3">
+        <label for="examType" class="form-label">Exam Type</label>
+        <select class="form-select form-control" name="examType" id="examType" required>
+          <option value="Mid">Mid</option>
+          <option value="Final">Final</option>
+        </select>
+        <div class="invalid-feedback">Select exam type</div>
+      </div>
 
-    <button type="submit" class="btn btn-primary">Upload</button>
-  </form>
-</div>
+      <!-- File Upload -->
+      <div class="mb-3">
+        <label for="file" class="form-label">Upload File</label>
+        <input class="form-control" type="file" id="file" name="file" accept=".pdf,.jpg,.jpeg,.png" required>
+        <div class="invalid-feedback">Please upload question paper file</div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+  </div>
 </div>

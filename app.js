@@ -53,7 +53,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
 app.use(session(sessionOption));
 app.use(flash());
 app.use(passport.initialize());
@@ -101,7 +101,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", questionPaperRoutes);
+app.use("/question-papers", questionPaperRoutes);
+
 
 //isQuestionOwner
 const isQuestionOwner = async (req,res,next)=>{
@@ -399,11 +400,10 @@ app.use((req, res, next) => {
 });
 
 
-app.use((err,req,res,next)=>{
-  let {status=500,message="something went wrong"} = err;
-  res.status(status).render("semesters/error",{message});
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message = "Something went wrong" } = err;
+  res.status(statusCode).render("semesters/error", { message });
 });
-
 
 
 app.listen(8080, () => {

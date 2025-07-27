@@ -20,8 +20,10 @@ const feedbackSchema = joi.object({
 });
 
 const questionPaperSchema = joi.object({
-  subject: joi.string().required(),
+  subjectId: joi.string().required(),
   semester: joi.number().integer().min(1).max(6).required(),
+  year: joi.number().min(2000).max(2099).required(),
+  examType: joi.string().valid("Mid", "Final").required(),
 });
 
 module.exports = {userSchema, feedbackSchema, questionPaperSchema};
