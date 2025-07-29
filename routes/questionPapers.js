@@ -79,33 +79,38 @@ router.post(
   validateUpload,
   wrapAsync(async (req, res) => {
     const { error } = questionPaperSchema.validate(req.body);
-  if (error) {
-    return res.status(400).send(error.details[0].message);
-  }
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
 
-  if (!req.file) {
-    return res.status(400).send("File is required.");
-  }
+    if (!req.file) {
+      return res.status(400).send("File is required.");
+    }
 
-  const { semester, subjectId, year, examType } = req.body;
+    const { semester, subjectId, year, examType } = req.body;
 
-  const newPaper = new QuestionPaper({
-    subject: subjectId,
-    semester,
-    year,
-    examType,
-    file: {
-      url: req.file.path,
-      filename: req.file.filename,
-    },
-    uploadedBy: req.user._id,
-  });
+    const subject = await Subject.findById(subjectId);
+    if (!subject) {
+      req.flash("error", "Subject not found.");
+      return res.redirect(`/semesters/${req.params.semId}`);
+    }
 
-  await newPaper.save();
+    const newPaper = {
+      year,
+      examType,
+      file: {
+        url: req.file.path,
+        filename: req.file.filename,
+      },
+    };
 
-  req.flash("success", "Question paper uploaded successfully!");
-  res.redirect(`/semester/${req.params.semId}`);
-}));
+    subject.papers.push(newPaper);
+    await subject.save();
+
+    req.flash("success", "Question paper uploaded successfully!");
+    res.redirect(`/semesters/${req.params.semId}`);
+  })
+);
 
 module.exports = router;
 

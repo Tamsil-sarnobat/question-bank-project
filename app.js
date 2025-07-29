@@ -9,7 +9,7 @@ const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
-const {userSchema, feedbackSchema, questionPaperSchema} = require("./schema.js");
+const {userSchema, feedbackSchema, Subjects} = require("./schema.js");
 const wrapAsync = require("./utils/wrapAsync.js");
 const Subject = require("./models/subject.js");
 const Feedback = require("./models/feedback.js");
@@ -101,7 +101,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/question-papers", questionPaperRoutes);
+app.use("/", questionPaperRoutes);
 
 
 //isQuestionOwner
@@ -393,6 +393,37 @@ app.delete("/semester/task/:id",async (req,res)=>{
   res.redirect("/semester/taskPage");
 });
 
+
+
+//subject routes
+
+app.get("/semesters/:id/subjects/new", isTeacher, (req, res) => {
+    const { id } = req.params; // id is actually the semester name or number
+    res.render("subjects/new", { semester: id });
+});
+
+app.post("/semesters/:id/subjects", isTeacher, async (req, res) => {
+    const { id } = req.params; // again, id is semester
+    const { name } = req.body;
+
+    const subject = new Subject({ name, semester: id });
+    await subject.save();
+
+    req.flash("success", "Subject added successfully!");
+    res.redirect(`/semesters/${id}`);
+});
+
+// POST: Create new subject for a semester
+app.post("/semesters/:id/subjects", isTeacher, async (req, res) => {
+    const semester = parseInt(req.params.id);
+    const { name } = req.body;
+
+    const subject = new Subject({ name, semester });
+    await subject.save();
+
+    req.flash("success", "Subject created successfully!");
+    res.redirect(`/semesters/${semester}`);
+});
 
 //page  not found
 app.use((req, res, next) => {

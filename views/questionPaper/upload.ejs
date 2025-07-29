@@ -18,7 +18,7 @@
         <label for="subjectId" class="form-label">Subject</label>
         <select class="form-select form-control" name="subjectId" id="subjectId" required>
           <% subjects.forEach(subject => { %>
-            <option value="<%= subject.name %>"><%= subject.name %></option>
+            <option value="<%= subject._id %>"><%= subject.name %></option>
           <% }); %>
         </select>
         <div class="invalid-feedback">Please select subject</div>
