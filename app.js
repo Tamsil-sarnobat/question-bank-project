@@ -121,7 +121,8 @@ const isTeacher = async (req,res,next)=>{
   if(req.user && req.user.role ===  "teacher"){
     return next();
   }
-  req.flash("error","You are Not authorized to Assign task");
+  req.flash("error",
+    "Access denied: This feature is restricted to teachers only.");
   return res.redirect("/");
 }
 
@@ -398,20 +399,20 @@ app.delete("/semester/task/:id",async (req,res)=>{
 //subject routes
 
 app.get("/semesters/:id/subjects/new", isTeacher, (req, res) => {
-    const { id } = req.params; // id is actually the semester name or number
+    const { id } = req.params;
     res.render("subjects/new", { semester: id });
 });
 
-app.post("/semesters/:id/subjects", isTeacher, async (req, res) => {
-    const { id } = req.params; // again, id is semester
-    const { name } = req.body;
+// app.post("/semesters/:id/subjects", isTeacher, async (req, res) => {
+//     const { id } = req.params; // again, id is semester
+//     const { name } = req.body;
 
-    const subject = new Subject({ name, semester: id });
-    await subject.save();
+//     const subject = new Subject({ name, semester: id });
+//     await subject.save();
 
-    req.flash("success", "Subject added successfully!");
-    res.redirect(`/semesters/${id}`);
-});
+//     req.flash("success", "Subject added successfully!");
+//     res.redirect(`/semesters/${id}`);
+// });
 
 // POST: Create new subject for a semester
 app.post("/semesters/:id/subjects", isTeacher, async (req, res) => {
@@ -424,6 +425,7 @@ app.post("/semesters/:id/subjects", isTeacher, async (req, res) => {
     req.flash("success", "Subject created successfully!");
     res.redirect(`/semesters/${semester}`);
 });
+
 
 //page  not found
 app.use((req, res, next) => {

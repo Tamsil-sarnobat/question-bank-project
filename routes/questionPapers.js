@@ -1,8 +1,9 @@
 const express = require("express");
 const ExpressError = require("../utils/ExpressError");
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const multer = require("multer");
 const { storage } = require("../cloudConfig");
+const { cloudinary } = require("../cloudConfig");
 const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
@@ -111,6 +112,41 @@ router.post(
     res.redirect(`/semesters/${req.params.semId}`);
   })
 );
+
+
+//route to show papers
+
+router.get(
+  "/question-papers/subject/:subjectId",
+  isLoggedIn,
+  wrapAsync(async (req, res) => {
+    const { subjectId } = req.params;
+    const subject = await Subject.findById(subjectId);
+
+    if (!subject) {
+      req.flash("error", "Subject not found");
+      return res.redirect(`/semesters/${req.params.semId}`);
+    }
+
+    res.render("questionPaper/show", { subject });
+  })
+);
+
+//paper delete route
+router.delete("/question-papers/:subjectId/papers/:paperId", isTeacher, async (req, res) => {
+  const { subjectId, paperId } = req.params;
+
+  const subject = await Subject.findById(subjectId);
+  if (!subject) {
+    return res.status(404).send("Subject not found");
+  }
+
+  subject.papers.pull(paperId); // This removes the subdocument
+  await subject.save();
+
+  req.flash("success", "Paper deleted successfully!");
+  res.redirect(`/question-papers/subject/${subjectId}`);
+});
 
 module.exports = router;
 

@@ -1,0 +1,55 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-5">
+  <h3 class="mb-4">
+    <%= subject.name %> (Semester <%= subject.semester %>)<i
+      >-Question Papers</i
+    >
+  </h3>
+
+  <% if (subject.papers.length === 0) { %>
+  <div class="alert alert-info">
+    No question papers available for this subject yet.
+  </div>
+  <% } else { %>
+  <div class="row">
+    <% subject.papers.forEach(paper => { %>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body paper">
+          <h5 class="card-title">
+            <%= paper.examType %> Exam - <%= paper.year %>
+          </h5>
+          <a
+            href="<%= paper.file.url %>"
+            target="_blank"
+            class="btn btn-primary btn-sm mt-3"
+            >View</a
+          >
+          <a
+            href="<%= paper.file.url.replace('/upload/', '/upload/fl_attachment:') %>"
+            class="btn btn-success btn-sm mt-3 ms-2"
+            target="_blank"
+            >Download</a
+          >
+          <% if (currentUser && currentUser.role === "teacher") { %>
+          <form
+            method="POST"
+            action="/question-papers/<%= subject._id %>/papers/<%= paper._id %>?_method=DELETE"
+            class="d-inline"
+          >
+            <button
+              class="btn btn-danger btn-sm mt-3 ms-2"
+              onclick="return confirm('Are you sure you want to delete this paper?')"
+            >
+              Delete
+            </button>
+          </form>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <% } %>
+</div>

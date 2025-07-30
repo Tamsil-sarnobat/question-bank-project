@@ -154,3 +154,10 @@ body{
 .task-btns a,button{
  margin-right: 1rem;
 }
+
+/*paper page */
+
+
+.paper:hover {
+    background-color: #eef3f5;  
+}
