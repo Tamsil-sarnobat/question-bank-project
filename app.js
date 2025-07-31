@@ -399,20 +399,9 @@ app.delete("/semester/task/:id",async (req,res)=>{
 //subject routes
 
 app.get("/semesters/:id/subjects/new", isTeacher, (req, res) => {
-    const { id } = req.params;
-    res.render("subjects/new", { semester: id });
+    const semester = parseInt(req.params.id);
+    res.render("subjects/new", { semester});
 });
-
-// app.post("/semesters/:id/subjects", isTeacher, async (req, res) => {
-//     const { id } = req.params; // again, id is semester
-//     const { name } = req.body;
-
-//     const subject = new Subject({ name, semester: id });
-//     await subject.save();
-
-//     req.flash("success", "Subject added successfully!");
-//     res.redirect(`/semesters/${id}`);
-// });
 
 // POST: Create new subject for a semester
 app.post("/semesters/:id/subjects", isTeacher, async (req, res) => {

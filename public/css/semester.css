@@ -33,6 +33,16 @@
     text-decoration: underline;
 }
 
+/* subnav */
+.nav li a {
+    opacity: 0.9;
+}
+
+.nav li a:hover {
+    opacity: 1;
+    font-weight: 500;
+}
+
 .full-width-wrapper {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
@@ -45,6 +55,7 @@
     color: darkslategrey !important; 
 }
 
-.nav-link:hover {
-    text-decoration: underline !important;
+.subnav {
+    background-color: #F5FBFF;
 }
+
