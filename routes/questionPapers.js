@@ -4,6 +4,10 @@ const router = express.Router({ mergeParams: true });
 const multer = require("multer");
 const { storage } = require("../cloudConfig");
 const { cloudinary } = require("../cloudConfig");
+const wrapAsync = require("../utils/wrapAsync.js");
+
+const questionPaper = require("../controllers/questionPaper.js");
+
 const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
@@ -17,8 +21,6 @@ const upload = multer({
     fileSize: 10 * 1024 * 1024,
   },
 });
-const Subject = require("../models/subject");
-const wrapAsync = require("../utils/wrapAsync.js");
 const {
   userSchema,
   feedbackSchema,
@@ -64,12 +66,9 @@ router.get(
   "/semester/:semId/upload",
   isLoggedIn,
   isTeacher,
-  wrapAsync(async (req, res) => {
-    const { semId } = req.params;
-    const subjects = await Subject.find({ semester: semId });
-    res.render("questionPaper/upload", { semId, subjects });
-  })
+  wrapAsync(questionPaper.QuesPaperForm)
 );
+
 
 // Route to handle the file upload
 router.post(
@@ -78,75 +77,19 @@ router.post(
   isTeacher,
   upload.single("file"),
   validateUpload,
-  wrapAsync(async (req, res) => {
-    const { error } = questionPaperSchema.validate(req.body);
-    if (error) {
-      return res.status(400).send(error.details[0].message);
-    }
-
-    if (!req.file) {
-      return res.status(400).send("File is required.");
-    }
-
-    const { semester, subjectId, year, examType } = req.body;
-
-    const subject = await Subject.findById(subjectId);
-    if (!subject) {
-      req.flash("error", "Subject not found.");
-      return res.redirect(`/semesters/${req.params.semId}`);
-    }
-
-    const newPaper = {
-      year,
-      examType,
-      file: {
-        url: req.file.path,
-        filename: req.file.filename,
-      },
-    };
-
-    subject.papers.push(newPaper);
-    await subject.save();
-
-    req.flash("success", "Question paper uploaded successfully!");
-    res.redirect(`/semesters/${req.params.semId}`);
-  })
+  wrapAsync(questionPaper.QuesPaperUpload)
 );
 
 
 //route to show papers
-
 router.get(
   "/question-papers/subject/:subjectId",
   isLoggedIn,
-  wrapAsync(async (req, res) => {
-    const { subjectId } = req.params;
-    const subject = await Subject.findById(subjectId);
-
-    if (!subject) {
-      req.flash("error", "Subject not found");
-      return res.redirect(`/semesters/${req.params.semId}`);
-    }
-
-    res.render("questionPaper/show", { subject });
-  })
+  wrapAsync(questionPaper.showPaper)
 );
 
 //paper delete route
-router.delete("/question-papers/:subjectId/papers/:paperId", isTeacher, async (req, res) => {
-  const { subjectId, paperId } = req.params;
-
-  const subject = await Subject.findById(subjectId);
-  if (!subject) {
-    return res.status(404).send("Subject not found");
-  }
-
-  subject.papers.pull(paperId); // This removes the subdocument
-  await subject.save();
-
-  req.flash("success", "Paper deleted successfully!");
-  res.redirect(`/question-papers/subject/${subjectId}`);
-});
+router.delete("/question-papers/:subjectId/papers/:paperId", isTeacher, wrapAsync(questionPaper.delPaper));
 
 module.exports = router;
 

@@ -55,7 +55,7 @@
             <% } %> <% if (currentUser && fb.user && fb.user._id.toString() ===
             currentUser._id.toString()) { %>
             <form
-              action="/feedbacks/<%= fb._id %>?_method=DELETE"
+              action="/feedback/<%= fb._id %>?_method=DELETE"
               method="POST"
               class="d-inline"
             >
@@ -74,7 +74,7 @@
       <% } %>
     </div>
     <div class="text-center">
-      <a href="/feedbacks" class="btn btn-primary">See All Feedbacks</a>
+      <a href="/feedback" class="btn btn-primary">See All Feedbacks</a>
     </div>
     <% } else { %>
     <p class="text-center">No feedbacks yet!</p>
