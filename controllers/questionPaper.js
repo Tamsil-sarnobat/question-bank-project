@@ -1,5 +1,12 @@
 const Subject = require("../models/subject");
 
+const {
+  userSchema,
+  feedbackSchema,
+  questionPaperSchema,
+} = require("../schema.js");
+const Joi = require("joi");
+
 
 
 module.exports.QuesPaperForm = async (req, res) => {

@@ -13,6 +13,7 @@ const wrapAsync = require("./utils/wrapAsync.js");
 const Subject = require("./models/subject.js");
 const Feedback = require("./models/feedback.js");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const passport = require("passport");
 const  localStrategy = require("passport-local");
 const User = require("./models/users");
@@ -27,6 +28,7 @@ const subjectRoutes = require("./routes/subjectRoutes.js");
 const userRoutes = require("./routes/userRoutes.js");
 
 const mongoLink = "mongodb://127.0.0.1:27017/QBProject";
+const dbUrl = process.env.DB_URL;
 
 main()
   .then(() => {
@@ -35,11 +37,21 @@ main()
   .catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect(mongoLink);
+  await mongoose.connect(dbUrl);
 }
 
+const store = MongoStore.create({
+  mongoUrl:dbUrl,
+  crypto:{
+    secret:process.env.SECRET,
+  },
+  touchAfter:24*3600,
+});
+
+
 let sessionOption ={
-  secret:"mySecretCookies",
+  store,
+  secret:process.env.SECRET,
   resave:false,
   saveUninitialized:true,
   cookie:{
@@ -48,6 +60,11 @@ let sessionOption ={
       httpOnly:true,
   }
 }
+
+
+store.on("error",()=>{
+  console.log("Error in Mongo Session Store",err);
+})
 
 
 app.engine("ejs", ejsMate);
